@@ -1,8 +1,9 @@
 #Cheery's Pygame Tutorial
 This tutorial is a draft, it will change. If you have ideas of how to improve or continue this tutorial, tell about it in [issues page](https://github.com/cheery/pygame_tutorial/issues). Oh, and if you disagree with me about something then fork your own tutorial. ;-)
 
-Before you start this tutorial, it'd be good to understand little bit of python already. What is a function, variable, loop, tuple, list, function call, import? I explain the rest as we go through this tutorial. I provide a link for more reading whenever I mention something you might not understand readily.
+Before you start this tutorial, it'd be good to understand little bit of python already. What is a function, variable, loop, tuple, list, function call, import? At least I expect you understand those things. I explain the rest as we go through this tutorial. I provide a link for more reading whenever I mention something you might not understand readily.
 
+##Rolling Columns
 We start from this piece of code:
 
     import pygame, sys
@@ -51,3 +52,18 @@ To make such rolling columns the process needs to do couple more fills. Lets add
         screen.fill(front_color, (x-thickness/2, 0, thickness, height))
 
 The animation may stutter a bit at the edges of the screen, because of [alialising](http://en.wikipedia.org/wiki/Aliasing). screen.fill is unable to smooth away the [pixel](http://en.wikipedia.org/wiki/Pixel) boundaries. You may experience further stutter because of other, unknown, reasons.
+
+Those columns might like some colors, but I leave that as an exercise to a reader as it's irrelevant for the rest of the tutorial and should not cause any difficulties. We will proceed to graphics. Before that there's a thing you might want to know.
+
+##Avoid Work
+You could take a break now, sit and think about what you've read this far. Perhaps play with the code I introduced. After a successful break get back and keep reading.
+
+If you need something that is not specific to your project, it might be someone has already written a module that matches your needs. Although it isn't a requirement to use existing modules. Use works of others to avoid work yourself. Although, if you need something very simple then do not waste time searching it and do it yourself.
+
+You may have had a play with the source code by this far. Already wondering how will you ever learn to use those modules? I'm not documenting those functions in this tutorial any way. The answer is simple. I have left it up to you to study [pygame](http://www.pygame.org/docs/) and [math](http://docs.python.org/library/math.html) reference manuals.
+
+The title of this tutorial is a bit of a misnomer. I'm not teaching you pygame. Pygame itself provides that documentation you could follow. I am teaching you project workflow, problem solving, programming techniques. Sort of things really good hackers understand and use routinely.
+
+You may have also noticed I didn't told you what we are actually doing in this tutorial. You could scroll this tutorial down to the bottom, but there's no point. What we are doing in this tutorial isn't really important. The goal of this tutorial is to show effective techniques in programming which you will imitate and fail at, yet numerous times hopefully.
+
+You will become skilled in hacking only through exercising hacker skills. Problem analysis and solving: These skills will let you breach barriers you might not otherwise bypass. Though they itself involve a problem that they aren't particularly easy to teach. I hope I handle it well enough and help you learning the necessary techniques faster than usual.
