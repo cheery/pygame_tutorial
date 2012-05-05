@@ -121,3 +121,28 @@ Still thinking it is missing something? Before that nice usable program we neede
 ![rolling columns](http://github.com/cheery/pygame_tutorial/raw/master/screenshots/brute_paint.png)
 
 Concluding this part as it's something cool enough. Obviously, some of the coolest things you can create are tools for creating things. Just don't hang into this recursive coolness loop for too long. Other kinds of people won't notice your coolness before you exit the loop.
+
+##Divide and Conquer
+I need to explain a new concept before we go on. We have 13 global variables, modules and functions in the program we just did. It is going to do lot of things so we are going to need much more variables about soon. Many of these variables will be related to another in a way. There wouldn't be one without another variable or a function wouldn't make sense without this one and so on. At this point we'll find classes useful.
+
+Python `class` syntax lets you create an object that can create instances of itself. When you call a class, it creates an object and calls a special initializer function to create a new instance. A valid class looks like this:
+
+    class myclass(object):
+        nom = "nom nom nom"
+        def __init__(self, value):
+            self.value = value
+
+        def useless(self):
+            print "An useless", self.value
+
+    mya = myclass("hello")
+    myb = myclass("cat")
+
+    mya.useless()
+    myb.useless()
+
+    print myclass.nom
+    print mya.nom
+    print myb.nom
+
+This particular example shows a bit how the syntax goes. You'll see more examples later. Right now it's important to understand that classes are useful for grouping (encapsulating) things together. If you are wondering what that `(object)` is doing, I can tell you it's pointing out a class to inherit from. I won't explain inheritance now as I'm not using it this example. You can read it yourself from the python manual if you're interested. In the next part we'll be making our useless brute painting app into useful brute painting app.
