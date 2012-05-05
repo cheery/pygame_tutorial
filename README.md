@@ -118,6 +118,6 @@ Now we have some syntax you might not readily know. `global canvas` is a safety 
 
 Still thinking it is missing something? Before that nice usable program we needed to make an one unusable. Yes we really want something to use, but that happens to be very hard to make straight from nothing. It is much easier to make an unusable program and then make it more usable in iterations, until it is usable enough.
 
-![rolling columns](http://github.com/cheery/pygame_tutorial/raw/master/screenshots/rolling_columns.png)
+![rolling columns](http://github.com/cheery/pygame_tutorial/raw/master/screenshots/brute_paint.png)
 
 Concluding this part as it's something cool enough. Obviously, some of the coolest things you can create are tools for creating things. Just don't hang into this recursive coolness loop for too long. Other kinds of people won't notice your coolness before you exit the loop.
