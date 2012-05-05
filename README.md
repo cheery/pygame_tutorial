@@ -53,7 +53,7 @@ To make such rolling columns the process needs to do couple more fills. Lets add
 
 The animation may stutter a bit at the edges of the screen, because of [alialising](http://en.wikipedia.org/wiki/Aliasing). screen.fill is unable to smooth away the [pixel](http://en.wikipedia.org/wiki/Pixel) boundaries. You may experience further stutter because of other, unknown, reasons.
 
-![rolling columns](screenshots/rolling_columns.png)
+![rolling columns](raw/master/screenshots/rolling_columns.png)
 
 Those columns might like some more colors, but I leave that as an exercise to a reader as it's irrelevant for the rest of the tutorial and should not cause any difficulties. We will proceed to graphics. Before that there's a thing you might want to know.
 
@@ -118,6 +118,6 @@ Now we have some syntax you might not readily know. `global canvas` is a safety 
 
 Still thinking it is missing something? Before that nice usable program we needed to make an one unusable. Yes we really want something to use, but that happens to be very hard to make straight from nothing. It is much easier to make an unusable program and then make it more usable in iterations, until it is usable enough.
 
-![rolling columns](screenshots/rolling_columns.png)
+![rolling columns](raw/master/screenshots/rolling_columns.png)
 
 Concluding this part as it's something cool enough. Obviously, some of the coolest things you can create are tools for creating things. Just don't hang into this recursive coolness loop for too long. Other kinds of people won't notice your coolness before you exit the loop.
