@@ -64,6 +64,56 @@ You may have had a play with the source code by this far. Already wondering how 
 
 The title of this tutorial is a bit of a misnomer. I'm not teaching you pygame. Pygame itself provides that documentation you could follow. I am teaching you project workflow, problem solving, programming techniques. Sort of things really good hackers understand and use routinely.
 
-You may have also noticed I didn't told you what we are actually doing in this tutorial. You could scroll this tutorial down to the bottom, but there's no point. What we are doing in this tutorial isn't really important. The goal of this tutorial is to show effective techniques in programming which you will imitate and fail at, yet numerous times hopefully.
+You may have also noticed I didn't told you where we will be ending up in this tutorial. You could scroll this tutorial down to the bottom, but there's no point. What we are doing in this tutorial isn't really important. The goal of this tutorial is to show effective techniques in programming which you will imitate and fail at, yet numerous times hopefully.
 
 You will become skilled in hacking only through exercising hacker skills. Problem analysis and solving: These skills will let you breach barriers you might not otherwise bypass. Though they itself involve a problem that they aren't particularly easy to teach. I hope I handle it well enough and help you learning the necessary techniques faster than usual.
+
+##Brute Paint
+We could write graphics to our games in Gimp of course. But there are two issues here, actually three. First I designed this tutorial for Raspberry Pi, and Gimp is not exactly the most lightweight image manipulation software there could be. Also, Gimp tools have been designed for image manipulation, not so much for drawing sprites. Third, to extend Gimp you'd need to write scripts to Gimp, and it'd require more indepth understanding about scripting Gimp.
+
+Because of issues mentioned here, we take a different route. Lets copy the piece of code we started from into paint/main.py! Lets make a program we can use to draw sprites.
+
+We need something to draw on. A pygame.Surface should do well enough for this purpose. For debugging we'll also want to see whether the `set_at`-method is working like we expect. Remove the old `animation_frame` and `dispatch` and insert this code to their place:
+
+    width = 64
+    height = 32
+    scale = 8
+    canvas = pygame.Surface((width, height), pygame.SRCALPHA)
+    canvas.set_at((0,0), white)
+    canvas.set_at((width-1,height-1), black)
+
+    def animation_frame(screen):
+        screen.fill(background_color)
+        view = pygame.transform.scale(canvas, (width*scale, height*scale))
+        screen.blit(view, (0, 0))
+
+    def plot((x,y)):
+        x = int(x/scale)
+        y = int(y/scale)
+        if 0 <= x < width and 0 <= y < height:
+            canvas.set_at((x,y), white)
+
+    def dispatch(event):
+        if event.type == pygame.QUIT:
+            sys.exit(0)
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            plot(event.pos)
+        if event.type == pygame.MOUSEMOTION and event.buttons != (0,0,0):
+            plot(event.pos)
+
+Now you can paint on the opened window, as if you had a white blocky crayon in place of your mouse. The code is pretty much self-explanatory except on the `plot`-function. You see I call it twice, and without it I'd have three levels of indentation there. The `plot` transforms the mouse coordinates to canvas coordinates. Notice also how I'm using the variables. They help a bit in understanding the program but essentially they avoid repeating, straining changes on the code.
+
+You see we are still missing something essential from our painting gadget. Fortunately that part has been made really easy by `pygame.image`-module. Append this code to your `dispatch`-function:
+
+    global canvas
+    if event.type == pygame.KEYDOWN:
+        if event.unicode == 'w':
+            pygame.image.save(canvas, 'canvas.png')
+        elif event.unicode == 'r':
+            canvas = pygame.image.load('canvas.png')
+
+Now we have some syntax you might not readily know. `global canvas` is a safety keywoard which you are using when you want to set a global variable instead of local. Python does not let you to poison global namespace without this keyword.
+
+Still thinking it is missing something? Before that nice usable program we needed to make an one unusable. Yes we really want something to use, but that happens to be very hard to make straight from nothing. It is much easier to make an unusable program and then make it more usable in iterations, until it is usable enough.
+
+Concluding this part as it's something cool enough. Obviously, some of the coolest things you can create are tools for creating things. Just don't hang into this recursive coolness loop for too long. Other kinds of people won't notice your coolness before you exit the loop.
