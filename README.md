@@ -146,3 +146,102 @@ Python `class` syntax lets you create an object that can create instances of its
     print myb.nom
 
 This particular example shows a bit how the syntax goes. You'll see more examples later. Right now it's important to understand that classes are useful for grouping (encapsulating) things together. If you are wondering what that `(object)` is doing, I can tell you it's pointing out a class to inherit from. I won't explain inheritance now as I'm not using it this example. You can read it yourself from the python manual if you're interested. In the next part we'll be making our useless brute painting app into useful brute painting app.
+
+##From Useless to Useful
+I'm afraid other projects are going to catch my attention very soon so I have to write a shorter conclusion for this tutorial than what I anticipated. Lets make this editor useful fast and get something done before I move on. You might have been wondering how to make that useless brute useful. I'd say it's useless because you can't change a color or choose a file. Lets fix this fast one problem at a time.
+
+The program starts having lot of conditional clauses under that keydown event. It's okay to keep them where they are, but doing like this makes it bit easier to follow. This function should go somewhere before the process enters eventloop:
+
+    def shortcut(unicode):
+        global canvas, color
+        if unicode == 'w':
+            pygame.image.save(canvas, 'canvas.png')
+        elif unicode == 'r':
+            canvas = pygame.image.load('canvas.png')
+        elif unicode in palette:
+            color = palette[unicode]
+
+The following should be nothing out of ordinary, but if it is.. The palette is a dictionary object and you can access it like an array. You'll find a value behind each key. Dictionaries are very common in python and they exist just because they're more efficient than if same thing was attempted to be done with lists alone.
+
+    color = 0x00,0x00,0x00,0xff
+
+    palette = {
+        '0': (0x00, 0x00, 0x00, 0x00),
+        '1': (0xff, 0x00, 0x00, 0xff),
+        '2': (0xff, 0xff, 0x00, 0xff),
+        '3': (0x00, 0xff, 0x00, 0xff),
+        '4': (0x00, 0xff, 0xff, 0xff),
+        '5': (0x00, 0x00, 0xff, 0xff),
+        '6': (0xff, 0x00, 0xff, 0xff),
+        '7': (0xff, 0xff, 0xff, 0xff),
+        '8': (0xff, 0x80, 0x00, 0xff),
+        '9': (0x80, 0x80, 0x80, 0xff),
+    }
+
+    pygame.font.init()
+    font = pygame.font.Font(None, 16)
+
+That's it. You should be able to select some colors even if they're not that pretty really. Now it's going to be tedious to remember these all colors so lets make them visible, add this to the end of `animation_frame`:
+
+    for index, key in enumerate('1234567890'):
+        keycolor = palette[key]
+        area = (index*40+2, screen.get_height()-22, 40, 20)
+        screen.fill(keycolor, area)
+        complement = 255-keycolor[0], 255-keycolor[1], 255-keycolor[2], 0xFF
+        screen.blit(font.render(key, True, complement), area)
+
+This is not the beautiest code I've written. But it almost does the job. You can perhaps see that I'm running out of nice variable names.
+
+Now it's usable! eh.. wait. We probably want to color other things than just "canvas.png" there. The author might also like to select the size of the canvas that's being used. We'd like to get some arguments in to change the behavior of this program. We'll also want to check whether a file exists, to automaticly open a file if given. Lets introduce optparse and os in the start of the file:
+
+    import os
+    from optparse import OptionParser
+
+    parser = OptionParser(
+        usage = "usage: %prog [options] file"
+    )
+    parser.add_option("-s", "--size", dest="size",
+                      help="SIZE of the canvas, if we need one more.", metavar="SIZE", default="64x64")
+
+    (options, args) = parser.parse_args()
+
+    if len(args) != 1:
+        sys.exit(1)
+
+    filename = args[0]
+
+    def parse_size():
+        width, height = options.size.split('x')
+        return int(width), int(height)
+
+Now we can insert arguments into a console or terminal of our choice, and select how are we using the program. The app exits early if there's no useful commands. The `parse_size` is enclosed in a function just to avoid messing up the global namespace.
+
+Lets remove this piece of code, as it is useless now:
+
+    elif unicode == 'r':
+        canvas = pygame.image.load('canvas.png')
+
+Replace the line with `pygame.Surface` on it with these:
+
+    if os.path.exists(filename):
+        canvas = pygame.image.load(filename)
+    else:
+        canvas = pygame.Surface(parse_size(), pygame.SRCALPHA)
+
+Also be free, and remove globals `width`, and `height`. Oh and replace the `'canvas.png'` with `filename`!
+
+Only on thing left. Lets add this piece just before into two places where those two globals were used.
+
+    width, height = canvas.get_size()
+
+Well, I'm generous enough to include 1:1 image on the screen as well, it's up to you to figure out where it is going to:
+
+    screen.blit(canvas, (screen.get_width()-width, screen.get_height()-height))
+
+![slightly less brute paint](http://github.com/cheery/pygame_tutorial/raw/master/screenshots/slightly_less_brute_paint.png)
+
+You can see we have arrived to something that's slightly less brute than the earlier version we had. We can choose a color from fixed palette and where to save the results. Oooh! Real artists would still rather draw on a toilet paper than this! You cannot write a nice paint out of a tutorial you know. :-) But there was an other point in this exercise than to get a nice brute painting app. The point of this exercise was give you an idea, that you can make your own tools and they aren't magical things you couldn't change.
+
+You might want to learn scripting gimp or blender, if you're not running them off a shoestring or expect to embed them into your games. Things like gimp or blender can't do everything for you though. If you'll find yourself in position that you need a some sort of tool, open this tutorial again and remind yourself that toolwriting isn't different from any other kind of programming.
+
+So uh.. Maybe we'd like to make a game with our newly created tool next?
