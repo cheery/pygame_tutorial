@@ -236,11 +236,11 @@ Only on thing left. Lets add this piece just before into two places where those 
 
 Well, I'm generous enough to include 1:1 image on the screen as well, it's up to you to figure out where it is going to:
 
-    screen.blit(canvas, (screen.get_width()-width, screen.get_height()-height))
+    screen.blit(canvas, (screen.get_width()-width, 0))
 
 ![slightly less brute paint](http://github.com/cheery/pygame_tutorial/raw/master/screenshots/slightly_less_brute_paint.png)
 
-You can see we have arrived to something that's slightly less brute than the earlier version we had. We can choose a color from fixed palette and where to save the results. Oooh! Real artists would still rather draw on a toilet paper than this! You cannot write a nice paint out of a tutorial you know. :-) But there was an other point in this exercise than to get a nice brute painting app. The point of this exercise was give you an idea, that you can make your own tools and they aren't magical things you couldn't change.
+You can see we have arrived to something that's slightly less brute than the earlier version we had. We can choose a color from fixed palette and where to save the results. Oooh! Real artists would still rather draw on a toilet paper than this! You cannot write a nice paint out of a tutorial you know. :-) But there was an other point in this exercise than to get a nice brute painting app. The point of this exercise was to give you an idea that you can make your own tools, and that existing ones aren't magical artifacts you couldn't change somehow to your liking.
 
 You might want to learn scripting gimp or blender, if you're not running them off a shoestring or expect to embed them into your games. Things like gimp or blender can't do everything for you though. If you'll find yourself in position that you need a some sort of tool, open this tutorial again and remind yourself that toolwriting isn't different from any other kind of programming.
 
