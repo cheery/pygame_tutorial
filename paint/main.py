@@ -52,7 +52,7 @@ def animation_frame(screen):
     width, height = canvas.get_size()
     view = pygame.transform.scale(canvas, (width*scale, height*scale))
     screen.blit(view, (0, 0))
-    screen.blit(canvas, (screen.get_width()-width, screen.get_height()-height))
+    screen.blit(canvas, (screen.get_width()-width, 0))
     screen.fill(color, (0, screen.get_height()-24, screen.get_width(), 24))
     for index, key in enumerate('1234567890'):
         keycolor = palette[key]
