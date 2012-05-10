@@ -245,3 +245,21 @@ You can see we have arrived to something that's slightly less brute than the ear
 You might want to learn scripting gimp or blender, if you're not running them off a shoestring or expect to embed them into your games. Things like gimp or blender can't do everything for you though. If you'll find yourself in position that you need a some sort of tool, open this tutorial again and remind yourself that toolwriting isn't different from any other kind of programming.
 
 So uh.. Maybe we'd like to make a game with our newly created tool next?
+
+##To The Battle Stations
+Doing the actual game would be pretty much repetition of the instructions I already gave. So I just made it without typing much instructions while working on it. The resulting game can be seen in the main.py of this directory.
+
+Most of the time games are just programs like everything else. They have some state that gets modified by the game events. The state itself might be transmitted over the network or stored on the disk. Overall it's not hard or anything. The hard things come from actual concrete workings of the game. How does this menu work for the player? What happens when player presses this key? How does the enemy behave? It's okay to do something at first and then return later on the issue, similar to how it's with that painting application we wrote.
+
+My example is bit of like the painting program in the sense that it's not polished in any way, or complete. It's some steps away from that. If you cared about doing this kind of game, you'd add some more enemies, make the game itself re-entrable that you could add a menu and a scoreboard.. cause game over when player dies.. add parallax background.. and so on.
+
+![battle stations](http://github.com/cheery/pygame_tutorial/raw/master/screenshots/battle_stations.png)
+
+There's not anything too odd in the source code. You can see I've separated the game logic of each object into it's own block, along the graphic and other information related to the game object. I keep the active objects in a scene-set. The removals/insertions set are there, because you cannot reliably remove or insert items in python set while you're iterating through it. This way the removals are being done just in the very end of the last update. The game doesn't interact much between objects because there's no need for such stuff. If it were to interact in more complex way, then the interaction scheme might be slightly more complex than it is now. There's not a scoreboard, player lives or anything other such.
+
+##Conclusion
+Not much to say to the conclusion. If you were doing a real game you might like to embed an editor into your game, that you could tune the game details while the game itself is playing. It isn't a jump into unknown since you've read this tutorial. You work on a state of some kind so just turn the malleable part of the game into a state of some sort, that'll make it more flexible too as well.
+
+What I've told will hopefully get you to do games if you are interested about that sort of things. If you're unfamiliar with programming, you will fail. But that's the idea. This tutorial is supposed to show you the way as I'm unable to just flush all this knowledge down your throat. You'll need to mess it up multiple times before you really figure how to do it right.
+
+I hope you liked the tutorial. Please file an issue if you hate it from some reason. If you want to study pygame more, you could try reading sources of different finished games, by different authors.
