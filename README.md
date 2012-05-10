@@ -55,6 +55,36 @@ The animation may stutter a bit at the edges of the screen, because of [alialisi
 
 ![rolling columns](http://github.com/cheery/pygame_tutorial/raw/master/screenshots/rolling_columns.png)
 
+    import pygame, sys
+    from time import time
+    from math import sin, pi
+
+    black = 0,0,0
+    white = 0xFF, 0xFF, 0xFF
+    background_color = 0x12, 0x0E, 0x1C
+    front_color = 0xE7, 0xF5, 0x6E
+
+    def animation_frame(screen):
+        screen.fill(background_color)
+        now = time()
+        (width, height) = screen.get_size()
+        for phase in [0.0, 0.2, 0.5, 0.8, 0.7]:
+            x = 512 + sin(2*pi*((now*0.02) + phase)) * 512
+            thickness = 10
+            screen.fill(front_color, (x-thickness/2, 0, thickness, height))
+
+    def dispatch(event):
+        if event.type == pygame.QUIT:
+            sys.exit(0)
+
+    pygame.display.init()
+    screen = pygame.display.set_mode((1024, 768))
+    while 1:
+        for event in pygame.event.get():
+            dispatch(event)
+        animation_frame(screen)
+        pygame.display.flip()
+
 Those columns might like some more colors, but I leave that as an exercise to a reader as it's irrelevant for the rest of the tutorial and should not cause any difficulties. We will proceed to graphics. Before that there's a thing you might want to know.
 
 ##Avoid Work
@@ -118,7 +148,53 @@ Now we have some syntax you might not readily know. `global canvas` is a safety 
 
 Still thinking it is missing something? Before that nice usable program we needed to make an one unusable. Yes we really want something to use, but that happens to be very hard to make straight from nothing. It is much easier to make an unusable program and then make it more usable in iterations, until it is usable enough.
 
-![rolling columns](http://github.com/cheery/pygame_tutorial/raw/master/screenshots/brute_paint.png)
+![brute paint](http://github.com/cheery/pygame_tutorial/raw/master/screenshots/brute_paint.png)
+
+    import pygame, sys
+
+    black = 0,0,0
+    white = 0xFF, 0xFF, 0xFF
+    background_color = 0x12, 0x0E, 0x1C
+
+    width = 64
+    height = 32
+    scale = 8
+    canvas = pygame.Surface((width, height), pygame.SRCALPHA)
+    canvas.set_at((0,0), white)
+    canvas.set_at((width-1,height-1), black)
+
+    def animation_frame(screen):
+        screen.fill(background_color)
+        view = pygame.transform.scale(canvas, (width*scale, height*scale))
+        screen.blit(view, (0, 0))
+
+    def plot((x,y)):
+        x = int(x/scale)
+        y = int(y/scale)
+        if 0 <= x < width and 0 <= y < height:
+            canvas.set_at((x,y), white)
+
+    def dispatch(event):
+        if event.type == pygame.QUIT:
+            sys.exit(0)
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            plot(event.pos)
+        if event.type == pygame.MOUSEMOTION and event.buttons != (0,0,0):
+            plot(event.pos)
+        global canvas
+        if event.type == pygame.KEYDOWN:
+            if event.unicode == 'w':
+                pygame.image.save(canvas, 'canvas.png')
+            elif event.unicode == 'r':
+                canvas = pygame.image.load('canvas.png')
+
+    pygame.display.init()
+    screen = pygame.display.set_mode((1024, 768))
+    while 1:
+        for event in pygame.event.get():
+            dispatch(event)
+        animation_frame(screen)
+        pygame.display.flip()
 
 Concluding this part as it's something cool enough. Obviously, some of the coolest things you can create are tools for creating things. Just don't hang into this recursive coolness loop for too long. Other kinds of people won't notice your coolness before you exit the loop.
 
@@ -240,6 +316,101 @@ Well, I'm generous enough to include 1:1 image on the screen as well, it's up to
 
 ![slightly less brute paint](http://github.com/cheery/pygame_tutorial/raw/master/screenshots/slightly_less_brute_paint.png)
 
+    import pygame, sys
+    import os
+    from optparse import OptionParser
+
+    parser = OptionParser(
+        usage = "usage: %prog [options] file"
+    )
+    parser.add_option("-s", "--size", dest="size",
+                      help="SIZE of the canvas, if we need one more.", metavar="SIZE", default="64x64")
+
+    (options, args) = parser.parse_args()
+
+    if len(args) != 1:
+        sys.exit(1)
+
+    filename = args[0]
+
+    def parse_size():
+        width, height = options.size.split('x')
+        return int(width), int(height)
+
+    black = 0,0,0
+    white = 0xFF, 0xFF, 0xFF
+    background_color = 0x12, 0x0E, 0x1C
+
+    scale = 8
+    if os.path.exists(filename):
+        canvas = pygame.image.load(filename)
+    else:
+        canvas = pygame.Surface(parse_size(), pygame.SRCALPHA)
+
+    color = 0x00,0x00,0x00,0xff
+
+    palette = {
+        '0': (0x00, 0x00, 0x00, 0x00),
+        '1': (0xff, 0x00, 0x00, 0xff),
+        '2': (0xff, 0xff, 0x00, 0xff),
+        '3': (0x00, 0xff, 0x00, 0xff),
+        '4': (0x00, 0xff, 0xff, 0xff),
+        '5': (0x00, 0x00, 0xff, 0xff),
+        '6': (0xff, 0x00, 0xff, 0xff),
+        '7': (0xff, 0xff, 0xff, 0xff),
+        '8': (0xff, 0x80, 0x00, 0xff),
+        '9': (0x80, 0x80, 0x80, 0xff),
+    }
+
+    pygame.font.init()
+    font = pygame.font.Font(None, 16)
+
+    def animation_frame(screen):
+        screen.fill(background_color)
+        width, height = canvas.get_size()
+        view = pygame.transform.scale(canvas, (width*scale, height*scale))
+        screen.blit(view, (0, 0))
+        screen.blit(canvas, (screen.get_width()-width, 0))
+        screen.fill(color, (0, screen.get_height()-24, screen.get_width(), 24))
+        for index, key in enumerate('1234567890'):
+            keycolor = palette[key]
+            area = (index*40+2, screen.get_height()-22, 40, 20)
+            screen.fill(keycolor, area)
+            complement = 255-keycolor[0], 255-keycolor[1], 255-keycolor[2], 0xFF
+            screen.blit(font.render(key, True, complement), area)
+            
+    def plot((x,y)):
+        x = int(x/scale)
+        y = int(y/scale)
+        width, height = canvas.get_size()
+        if 0 <= x < width and 0 <= y < height:
+            canvas.set_at((x,y), color)
+
+    def shortcut(unicode):
+        global canvas, color
+        if unicode == 'w':
+            pygame.image.save(canvas, filename)
+        elif unicode in palette:
+            color = palette[unicode]
+
+    def dispatch(event):
+        if event.type == pygame.QUIT:
+            sys.exit(0)
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            plot(event.pos)
+        if event.type == pygame.MOUSEMOTION and event.buttons != (0,0,0):
+            plot(event.pos)
+        if event.type == pygame.KEYDOWN:
+            shortcut(event.unicode)
+
+    pygame.display.init()
+    screen = pygame.display.set_mode((1024, 768))
+    while 1:
+        for event in pygame.event.get():
+            dispatch(event)
+        animation_frame(screen)
+        pygame.display.flip()
+
 You can see we have arrived to something that's slightly less brute than the earlier version we had. We can choose a color from fixed palette and where to save the results. Oooh! Real artists would still rather draw on a toilet paper than this! You cannot write a nice paint out of a tutorial you know. :-) But there was an other point in this exercise than to get a nice brute painting app. The point of this exercise was to give you an idea that you can make your own tools, and that existing ones aren't magical artifacts you couldn't change somehow to your liking.
 
 You might want to learn scripting gimp or blender, if you're not running them off a shoestring or expect to embed them into your games. Things like gimp or blender can't do everything for you though. If you'll find yourself in position that you need a some sort of tool, open this tutorial again and remind yourself that toolwriting isn't different from any other kind of programming.
@@ -254,6 +425,146 @@ Most of the time games are just programs like everything else. They have some st
 My example is bit of like the painting program in the sense that it's not polished in any way, or complete. It's some steps away from that. If you cared about doing this kind of game, you'd add some more enemies, make the game itself re-entrable that you could add a menu and a scoreboard.. cause game over when player dies.. add parallax background.. and so on.
 
 ![battle stations](http://github.com/cheery/pygame_tutorial/raw/master/screenshots/battle_stations.png)
+
+    import pygame, sys
+    from time import time
+    from math import sin, pi
+    from random import random
+
+    black = 0,0,0
+    white = 0xFF, 0xFF, 0xFF
+    background_color = 0x12, 0x0E, 0x1C
+    front_color = 0xE7, 0xF5, 0x6E
+
+    class Player(object):
+        img = pygame.image.load('assets/ship.png')
+        mask = pygame.mask.from_surface(img)
+        offset_x = 32
+        offset_y = 32
+        group = 'ally'
+        def __init__(self, x, y):
+            self.x = x
+            self.y = y
+            self.ctl = []
+            self.fire_delay = 0
+
+        def update(self, dt):
+            self.fire_delay -= dt
+            motion_y = 0
+            firing = False
+            for cmd in self.ctl:
+                if cmd == pygame.K_DOWN:
+                    motion_y = 200
+                if cmd == pygame.K_UP:
+                    motion_y = -200
+                if cmd == pygame.K_SPACE:
+                    firing = True
+            self.y += motion_y * dt
+            if firing and self.fire_delay <= 0:
+                insertions.add(Bullet(self.x+8, self.y+4))
+                self.fire_delay = 0.1
+
+    class Bullet(object):
+        img = pygame.image.load('assets/bullet.png')
+        mask = pygame.mask.from_surface(img)
+        offset_x = 0
+        offset_y = 1
+        group = 'ally'
+        def __init__(self, x, y):
+            self.x = x
+            self.y = y
+            self.travel = 0
+
+        def update(self, dt):
+            motion = 500 * dt
+            self.x += motion
+            self.travel += motion
+            if self.travel > 1000:
+                removals.add(self)
+
+    class Asteroid(object):
+        img = pygame.image.load('assets/asteroid.png')
+        mask = pygame.mask.from_surface(img)
+        offset_x = 32
+        offset_y = 32
+        group = 'enemy'
+        def __init__(self, x, y):
+            self.x = x
+            self.y = y
+
+        def update(self, dt):
+            self.x -= 200 * dt
+            if self.x < -32:
+                removals.add(self)
+
+    scene = set()
+    removals = set()
+    insertions = set()
+
+    ship = Player(50, 200)
+    scene.add(ship)
+
+    enemy_delay = 0
+
+    def check_collision(obj, other):
+        x = int((obj.x - obj.offset_x) - (other.x - other.offset_x))
+        y = int((obj.y - obj.offset_y) - (other.y - other.offset_y))
+        return other.mask.overlap_area(obj.mask, (x,y)) > 0
+
+    def collision(obj, other):
+        if obj.group == 'ally' and other.group == 'enemy':
+            if check_collision(obj, other):
+                removals.add(obj)
+                removals.add(other)
+
+    def update(dt):
+        global enemy_delay
+        for obj in scene:
+            obj.update(dt)
+            for other in scene:
+                collision(obj, other)
+        scene.difference_update(removals)
+        removals.clear()
+        scene.update(insertions)
+        insertions.clear()
+        
+        enemy_delay -= dt
+        if enemy_delay <= 0:
+            scene.add(Asteroid(1024+32, 768*random()))
+            enemy_delay = 0.5
+
+    def animation_frame(screen):
+        screen.fill(background_color)
+        now = time()
+        (width, height) = screen.get_size()
+        for phase in [0.0, 0.2, 0.5, 0.8, 0.7]:
+            x = 512 + sin(2*pi*((now*0.02) + phase)) * 512
+            thickness = 10
+            screen.fill(front_color, (x-thickness/2, 0, thickness, height))
+        for obj in scene:
+            screen.blit(obj.img, (obj.x - obj.offset_x, obj.y - obj.offset_y))
+
+    def dispatch(event):
+        if event.type == pygame.QUIT:
+            sys.exit(0)
+        if event.type == pygame.KEYDOWN:
+            if not event.key in ship.ctl:
+                ship.ctl.append(event.key)
+        if event.type == pygame.KEYUP:
+            if event.key in ship.ctl:
+                ship.ctl.remove(event.key)
+
+    pygame.display.init()
+    screen = pygame.display.set_mode((1024, 768))
+    dt, now = 0, time()
+    while 1:
+        for event in pygame.event.get():
+            dispatch(event)
+        animation_frame(screen)
+        update(dt)
+        pygame.display.flip()
+        last, now = now, time()
+        dt = now - last
 
 There's not anything too odd in the source code. You can see I've separated the game logic of each object into it's own block, along the graphic and other information related to the game object. I keep the active objects in a scene-set. The removals/insertions set are there, because you cannot reliably remove or insert items in python set while you're iterating through it. This way the removals are being done just in the very end of the last update. The game doesn't interact much between objects because there's no need for such stuff. If it were to interact in more complex way, then the interaction scheme might be slightly more complex than it is now. There's not a scoreboard, player lives or anything other such.
 
