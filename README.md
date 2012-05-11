@@ -21,6 +21,8 @@ If you are the target audience for this tutorial you should already know a littl
 
 If you don't understand the meaning of some words in that list. Go study an another python tutorial first. I'll explain the rest of python constructs if, and whenever we need them.
 
+Prepare to fail numerous times before really getting what I just told. This tutorial should provide just enough material for you to play on. Imitate these things, play with the code, and fail many times and ways.
+
 ##Table of Contents
 * [Rolling Columns](#rolling-columns)
 * [Avoid Work](#avoid-work)
@@ -116,20 +118,22 @@ Here's the code for glancing:
 
 This is about the way how pygame works. If you'd like some more colors or anything else, do it yourself. Anything such is irrelevant for the rest of the tutorial though.
 
+You may have had a play with the source code by this far. Already wondering how will you ever learn to use rest of pygame? I'm not documenting those functions in this tutorial any way. The answer is simple. I have left it up to you to study [pygame](http://www.pygame.org/docs/) reference manual. You can read the documentation there and I don't need to repeat it.
+
 ##Avoid Work
-Obviously, take breaks often 
+Obviously, take breaks often. It's not the kind of work avoidance I want you to do though, well unless you use the break to play with the code. My work avoidance guide crystallizes on two important instructions: Do not Repeat Yourself, and Do not Repeat Others.
 
-You could take a break now, sit and think about what you've read this far. Perhaps play with the code I introduced. After a successful break get back and keep reading.
+Do not Repeat Yourself is quite simple principle. If you have a piece of complex code that does some important thing. Avoid copying and pasting this all around in your source code. Every copy/paste makes it harder to change the complex behaviour you created. Every duplication causes the bugs inside that complex code to multiply.
 
-If you need something that is not specific to your project, it might be someone has already written a module that matches your needs. Although it isn't a requirement to use existing modules. Use works of others to avoid work yourself. Although, if you need something very simple then do not waste time searching it and do it yourself.
+It's still okay to repeat some things. But they should be small things in general or some kind of templates. Anything else, and you're better off by rewriting the thing such that you don't need to duplicate the code.
 
-You may have had a play with the source code by this far. Already wondering how will you ever learn to use those modules? I'm not documenting those functions in this tutorial any way. The answer is simple. I have left it up to you to study [pygame](http://www.pygame.org/docs/) and [math](http://docs.python.org/library/math.html) reference manuals.
+One thing yet. You should not duplicate things that are conceptually same. Such things are magical numbers that appear in the middle of code. If you use such magic number twice, it's better if you assign a variable to that number and use the variable instead. This allows you to alter the magic number, or alter the logic of the program easier.
 
-The title of this tutorial is a bit of a misnomer. I'm not teaching you pygame. Pygame itself provides that documentation you could follow. I am teaching you project workflow, problem solving, programming techniques. Sort of things really good hackers understand and use routinely.
+Do not Repeat Others might be equally simple principle. Though sometimes you cannot follow this rule because of copyright-monopoly restrictions. In generic you should use and work on other people's code though, especially if they're already well done things. Work done by another means you don't need to work on it yourself.
 
-You may have also noticed I didn't told you where we will be ending up in this tutorial. You could scroll this tutorial down to the bottom, but there's no point. What we are doing in this tutorial isn't really important. The goal of this tutorial is to show effective techniques in programming which you will imitate and fail at, yet numerous times hopefully.
+Python provides a large collection of standard libraries which you should use whenever you need them. For example that [math](http://docs.python.org/library/math.html)-module we used is from python stdlib.
 
-You will become skilled in hacking only through exercising hacker skills. Problem analysis and solving: These skills will let you breach barriers you might not otherwise bypass. Though they itself involve a problem that they aren't particularly easy to teach. I hope I handle it well enough and help you learning the necessary techniques faster than usual.
+There's an exception to this rule as well. If using work of others takes longer time or requires more code than rolling one on your own, then you are probably doing better without others code. 
 
 ##Brute Paint
 We could write graphics to our games in Gimp of course. But there are two issues here, actually three. First I designed this tutorial for Raspberry Pi, and Gimp is not exactly the most lightweight image manipulation software there could be. Also, Gimp tools have been designed for image manipulation, not so much for drawing sprites. Third, to extend Gimp you'd need to write scripts to Gimp, and it'd require more indepth understanding about scripting Gimp.
