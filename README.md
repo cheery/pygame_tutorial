@@ -26,6 +26,7 @@ Prepare to fail numerous times before really getting what I just told. This tuto
 ##Table of Contents
 * [Rolling Columns](#rolling-columns)
 * [Avoid Work](#avoid-work)
+* [Brute Paint](#brute-paint)
 * [TOC](#TOC)
 
 ##Rolling Columns
@@ -136,9 +137,11 @@ Python provides a large collection of standard libraries which you should use wh
 There's an exception to this rule as well. If using work of others takes longer time or requires more code than rolling one on your own, then you are probably doing better without others code. 
 
 ##Brute Paint
-We could write graphics to our games in Gimp of course. But there are two issues here, actually three. First I designed this tutorial for Raspberry Pi, and Gimp is not exactly the most lightweight image manipulation software there could be. Also, Gimp tools have been designed for image manipulation, not so much for drawing sprites. Third, to extend Gimp you'd need to write scripts to Gimp, and it'd require more indepth understanding about scripting Gimp.
+In this section we make a small paint program which we use through the rest of the tutorial. I think it's worth my time to show you that you can make your own tools instead of relying on existing ones. It will also help you to use existing tools if you acknowledge their malleability.
 
-Because of issues mentioned here, we take a different route. Lets copy the piece of code we started from into paint/main.py! Lets make a program we can use to draw sprites.
+We could also write scripts to Gimp, but it'd require more indepth understanding about scripting Gimp. That'd also require to have some deeper point in our exercise, which might blur the point I'm trying to get through. Also on some systems the Gimp is just way too heavy. You might like to draw sprites in Raspberry Pi, for example. Not that fun if your drawing app takes 80 seconds to start up.
+
+One another thing is that Gimp is designed for image manipulation. If you make your own program it could be designed for whatever you, as the author, want it to do. Because of this we'll write our own "paint" that we could use to draw some sprites. Copy the stub we made earlier into `paint/main.py`
 
 We need something to draw on. A pygame.Surface should do well enough for this purpose. For debugging we'll also want to see whether the `set_at`-method is working like we expect. Remove the old `animation_frame` and `dispatch` and insert this code to their place:
 
@@ -181,9 +184,9 @@ You see we are still missing something essential from our painting gadget. Fortu
 
 Now we have some syntax you might not readily know. `global canvas` is a safety keywoard which you are using when you want to set a global variable instead of local. Python does not let you to poison global namespace without this keyword.
 
-Still thinking it is missing something? Before that nice usable program we needed to make an one unusable. Yes we really want something to use, but that happens to be very hard to make straight from nothing. It is much easier to make an unusable program and then make it more usable in iterations, until it is usable enough.
-
 ![brute paint](http://github.com/cheery/pygame_tutorial/raw/master/screenshots/brute_paint.png)
+
+Here's the code for glancing:
 
     import pygame, sys
 
@@ -231,7 +234,7 @@ Still thinking it is missing something? Before that nice usable program we neede
         animation_frame(screen)
         pygame.display.flip()
 
-Concluding this part as it's something cool enough. Obviously, some of the coolest things you can create are tools for creating things. Just don't hang into this recursive coolness loop for too long. Other kinds of people won't notice your coolness before you exit the loop.
+Our paint is able to take user input and save the drawn image into a file. It's very much useless program at the moment for anyone else except us. You could try draw something with this toy and recognise what could make it more useful for what we are doing. It looks like really cool if you see the potential that was just exposed.
 
 ##Divide and Conquer
 I need to explain a new concept before we go on. We have 13 global variables, modules and functions in the program we just did. It is going to do lot of things so we are going to need much more variables about soon. Many of these variables will be related to another in a way. There wouldn't be one without another variable or a function wouldn't make sense without this one and so on. At this point we'll find classes useful.
