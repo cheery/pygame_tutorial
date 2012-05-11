@@ -1,7 +1,32 @@
 #Cheery's Pygame Tutorial
-This tutorial is a draft, it will change. If you have ideas of how to improve or continue this tutorial, tell about it in [issues page](https://github.com/cheery/pygame_tutorial/issues). Oh, and if you disagree with me about something then fork your own tutorial. ;-)
+(This tutorial is still a draft)
 
-Before you start this tutorial, it'd be good to understand little bit of python already. What is a function, variable, loop, tuple, list, function call, import? At least I expect you understand those things. I explain the rest as we go through this tutorial. I provide a link for more reading whenever I mention something you might not understand readily.
+The title is a bit of a misnomer, as this tutorial is not so much about pygame as it is about a project workflow and problem solving. This tutorial should help people who handle the basics but are struggling if they were to make anything nontrivial.
+
+The basic premise here is that it's quite much impossible to come up with a high-quality well-optimized software by designing it all in single pass before writing the source code. Writing programs is a puzzle of sort, and you need to open the problem space to yourself before you can work your way through.
+
+I just told what I want to teach you with this tutorial. The problem is such skills cannot be learned by reading. You'll have to learn this yourself as best this text can do is to show the way.
+
+If you are target audience, you should already know a little bit about python the programming language. Here's a glossary of concepts you should understand about python:
+
+* Function
+* Function call
+* Import statement
+* List
+* If statement
+* While statement
+* Module
+* Tuple
+* Variable
+
+If you don't understand the meaning of some words in that list. Go study an another python tutorial first. I'll explain the rest of python constructs if, and whenever we need them.
+
+* [Rolling Columns](#rolling_columns)
+* [TOC](#TOC)
+
+
+
+
 
 ##Rolling Columns
 We start from this piece of code:
@@ -574,3 +599,5 @@ Not much to say to the conclusion. If you were doing a real game you might like 
 What I've told will hopefully get you to do games if you are interested about that sort of things. If you're unfamiliar with programming, you will fail. But that's the idea. This tutorial is supposed to show you the way as I'm unable to just flush all this knowledge down your throat. You'll need to mess it up multiple times before you really figure how to do it right.
 
 I hope you liked the tutorial. Please file an issue if you hate it from some reason. If you want to study pygame more, you could try reading sources of different finished games, by different authors.
+
+If you have ideas of how to improve or continue this tutorial, tell about it in [issues page](https://github.com/cheery/pygame_tutorial/issues). You're also free to fork your own tutorial from this one.
