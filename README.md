@@ -5,9 +5,9 @@ The title is a bit of a misnomer, as this tutorial is not so much about pygame a
 
 The basic premise here is that it's quite much impossible to come up with a high-quality well-optimized software by designing it all in single pass before writing the source code. Writing programs is a puzzle of sort, and you need to open the problem space to yourself before you can work your way through.
 
-I just told what I want to teach you with this tutorial. The problem is such skills cannot be learned by reading. You'll have to learn this yourself as best this text can do is to show the way.
+I just told what I want to teach you with this tutorial. An one problem is that such skills cannot be learned by reading. You'll have to learn this yourself as best this text can do is to show the way.
 
-If you are target audience, you should already know a little bit about python the programming language. Here's a glossary of concepts you should understand about python:
+If you are the target audience for this tutorial you should already know a little bit about python the programming language. Here's a glossary of concepts and grammatical constructs you should understand about python:
 
 * Function
 * Function call
@@ -23,14 +23,15 @@ If you don't understand the meaning of some words in that list. Go study an anot
 
 ##Table of Contents
 * [Rolling Columns](#rolling_columns)
+* [Avoid Work](#avoid_work)
 * [TOC](#TOC)
 
-
-
-
-
 ##Rolling Columns
-We start from this piece of code:
+This is the only section that particularly tells about the pygame library. People who understand how pygame beats can just skip this section. The program of this section draws some animated, rolling columns.
+
+Pygame is a python's wrapper library for Simple DirectMedia Layer. SDL is a cross-platform multimedia library which provides access to audio, input peripherals and video systems.
+
+I wrote something that gets you started up in pygame, lets study it:
 
     import pygame, sys
 
@@ -53,7 +54,7 @@ We start from this piece of code:
         animation_frame(screen)
         pygame.display.flip()
 
-This code opens a display device through pygame and goes into an event polling loop. For every event, that was being received during last frame, it calls our dispatch -function, which determines what happens when it gets an event. We can see that a request to quit causes the process to exit.
+This code opens a display device through pygame and goes into an event polling loop. For every event, that was being received during last frame, it calls our dispatch -function which determines what happens when it gets an event. We can see that a request to quit causes the process to exit.
 
 Pygame gives our process either a real or virtual [framebuffer device](http://en.wikipedia.org/wiki/Framebuffer). Process gets a memory buffer to fill with whatever we want. Actually it gets two such buffers to prevent [screen tearing](http://en.wikipedia.org/wiki/Screen_tearing) while animating. One buffer gets filled when an another is shown on the screen. Event loop calls display.flip at the end, which switches the roles of buffers, causing our animation to show up on the screen.
 
@@ -77,9 +78,11 @@ To make such rolling columns the process needs to do couple more fills. Lets add
         thickness = 10
         screen.fill(front_color, (x-thickness/2, 0, thickness, height))
 
-The animation may stutter a bit at the edges of the screen, because of [alialising](http://en.wikipedia.org/wiki/Aliasing). screen.fill is unable to smooth away the [pixel](http://en.wikipedia.org/wiki/Pixel) boundaries. You may experience further stutter because of other, unknown, reasons.
+The animation may stutter a bit at the edges of the screen, because of [alialising](http://en.wikipedia.org/wiki/Aliasing). screen.fill is unable to smooth away the [pixel](http://en.wikipedia.org/wiki/Pixel) boundaries. You may experience further stutter because of other, unknown, reasons. SDL and pygame are a bit old-mannered as a library and may not be the most efficient access to the hardware you have.
 
 ![rolling columns](http://github.com/cheery/pygame_tutorial/raw/master/screenshots/rolling_columns.png)
+
+Here's the code for glancing:
 
     import pygame, sys
     from time import time
@@ -111,7 +114,7 @@ The animation may stutter a bit at the edges of the screen, because of [alialisi
         animation_frame(screen)
         pygame.display.flip()
 
-Those columns might like some more colors, but I leave that as an exercise to a reader as it's irrelevant for the rest of the tutorial and should not cause any difficulties. We will proceed to graphics. Before that there's a thing you might want to know.
+This is about the way how pygame works. If you'd like some more colors or anything else, do it yourself. Anything such is irrelevant for the rest of the tutorial though.
 
 ##Avoid Work
 You could take a break now, sit and think about what you've read this far. Perhaps play with the code I introduced. After a successful break get back and keep reading.
