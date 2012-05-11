@@ -22,8 +22,8 @@ If you are the target audience for this tutorial you should already know a littl
 If you don't understand the meaning of some words in that list. Go study an another python tutorial first. I'll explain the rest of python constructs if, and whenever we need them.
 
 ##Table of Contents
-* [Rolling Columns](#rolling_columns)
-* [Avoid Work](#avoid_work)
+* [Rolling Columns](#rolling-columns)
+* [Avoid Work](#avoid-work)
 * [TOC](#TOC)
 
 ##Rolling Columns
@@ -117,6 +117,8 @@ Here's the code for glancing:
 This is about the way how pygame works. If you'd like some more colors or anything else, do it yourself. Anything such is irrelevant for the rest of the tutorial though.
 
 ##Avoid Work
+Obviously, take breaks often 
+
 You could take a break now, sit and think about what you've read this far. Perhaps play with the code I introduced. After a successful break get back and keep reading.
 
 If you need something that is not specific to your project, it might be someone has already written a module that matches your needs. Although it isn't a requirement to use existing modules. Use works of others to avoid work yourself. Although, if you need something very simple then do not waste time searching it and do it yourself.
