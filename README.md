@@ -21,6 +21,7 @@ If you are target audience, you should already know a little bit about python th
 
 If you don't understand the meaning of some words in that list. Go study an another python tutorial first. I'll explain the rest of python constructs if, and whenever we need them.
 
+##Table of Contents
 * [Rolling Columns](#rolling_columns)
 * [TOC](#TOC)
 
