@@ -27,6 +27,7 @@ Prepare to fail numerous times before really getting what I just told. This tuto
 * [Rolling Columns](#rolling-columns)
 * [Avoid Work](#avoid-work)
 * [Brute Paint](#brute-paint)
+* [Divide and Conquer](#divide-and-conquer)
 * [TOC](#TOC)
 
 ##Rolling Columns
@@ -237,9 +238,9 @@ Here's the code for glancing:
 Our paint is able to take user input and save the drawn image into a file. It's very much useless program at the moment for anyone else except us. You could try draw something with this toy and recognise what could make it more useful for what we are doing. It looks like really cool if you see the potential that was just exposed.
 
 ##Divide and Conquer
-I need to explain a new concept before we go on. We have 13 global variables, modules and functions in the program we just did. It is going to do lot of things so we are going to need much more variables about soon. Many of these variables will be related to another in a way. There wouldn't be one without another variable or a function wouldn't make sense without this one and so on. At this point we'll find classes useful.
+This section explains classes, which are useful in further sections because our programs will become more complex. In theory we could go entirely without classes but they are a neat way to thread pieces of our code together into groups that make sense together. Fancy people call this encapsulation. 
 
-Python `class` syntax lets you create an object that can create instances of itself. When you call a class, it creates an object and calls a special initializer function to create a new instance. A valid class looks like this:
+Class in python is an object, which can produce instantiations of itself. A `class` declares a pattern by which new objects are created. ..And.. that's about it. Lets look at an example:
 
     class myclass(object):
         nom = "nom nom nom"
@@ -252,14 +253,18 @@ Python `class` syntax lets you create an object that can create instances of its
     mya = myclass("hello")
     myb = myclass("cat")
 
-    mya.useless()
-    myb.useless()
+    mya.useless()           # "An useless hello"
+    myb.useless()           # "An useless cat"
 
-    print myclass.nom
-    print mya.nom
-    print myb.nom
+    mya.nom = "chomp"
 
-This particular example shows a bit how the syntax goes. You'll see more examples later. Right now it's important to understand that classes are useful for grouping (encapsulating) things together. If you are wondering what that `(object)` is doing, I can tell you it's pointing out a class to inherit from. I won't explain inheritance now as I'm not using it this example. You can read it yourself from the python manual if you're interested. In the next part we'll be making our useless brute painting app into useful brute painting app.
+    print myclass.nom       # "nom nom nom"
+    print mya.nom           # "chomp"
+    print myb.nom           # "nom nom nom
+
+Comments point out what each line is printing, so you won't need to run the code yourself to find that out. The `myclass` is being instantiated by calling it. The instance gets the methods and variables inside that class. Methods are like functions except that their first argument `self` gets bounded to the instance they're part of. They get bundled prettily along the data they work on and get divided apart from the rest of the program.
+
+You might wonder what the `(object)` -piece is doing in the class declaration. It's an another class which this class is inheriting from. I don't explain it further as it's more complex subject and not really needed at the moment. Read it up from the python manual if it bothers you. Otherwise I won't mention of it again during this tutorial.
 
 ##From Useless to Useful
 I'm afraid other projects are going to catch my attention very soon so I have to write a shorter conclusion for this tutorial than what I anticipated. Lets make this editor useful fast and get something done before I move on. You might have been wondering how to make that useless brute useful. I'd say it's useless because you can't change a color or choose a file. Lets fix this fast one problem at a time.
