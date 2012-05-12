@@ -1,6 +1,4 @@
 #Cheery's Pygame Tutorial
-(This tutorial is still a draft)
-
 The title is a bit of a misnomer, as this tutorial is not so much about pygame as it is about a project workflow and problem solving. This tutorial should help people who handle the basics but are struggling if they were to make anything nontrivial.
 
 The basic premise here is that it's quite much impossible to come up with a high-quality well-optimized software by designing it all in single pass before writing the source code. Writing programs is a puzzle of sort, and you need to open the problem space to yourself before you can work your way through.
