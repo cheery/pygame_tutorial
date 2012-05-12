@@ -260,7 +260,7 @@ Class in python is an object, which can produce instantiations of itself. A `cla
 
     print myclass.nom       # "nom nom nom"
     print mya.nom           # "chomp"
-    print myb.nom           # "nom nom nom
+    print myb.nom           # "nom nom nom"
 
 Comments point out what each line is printing, so you won't need to run the code yourself to find that out. The `myclass` is being instantiated by calling it. The instance gets the methods and variables inside that class. Methods are like functions except that their first argument `self` gets bounded to the instance they're part of. They get bundled prettily along the data they work on and get divided apart from the rest of the program.
 
