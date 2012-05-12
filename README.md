@@ -30,6 +30,7 @@ Prepare to fail numerous times before really getting what I just told. This tuto
 * [Divide and Conquer](#divide-and-conquer)
 * [From Useless to Useful](#from-useless-to-useful)
 * [To The Battle Stations](#to-the-battle-stations)
+* [Game State and Framestep](#game-state-and-framestep)
 * [Conclusion](#conclusion)
 
 ##Rolling Columns
@@ -618,6 +619,17 @@ Full source code:
 There's not anything too odd in the source code. You can see I've separated the game logic of each object into it's own block, along the graphic and other information related to the game object. I keep the active objects in a scene-set. The removals/insertions set are there, because you cannot reliably remove or insert items in python set while you're iterating through it. This way the removals are being done just in the very end of the last update. The game doesn't interact much between objects because there's no need for such stuff. If it were to interact in more complex way, then the interaction scheme might be slightly more complex than it is now. There's not a scoreboard, player lifes or anything other such.
 
 If you grasped this tutorial you might see the potential of this program code... Maybe, where could you take it to?
+
+##Game State and Framestep
+If you've played classic games like tetris, nibbles, pacman, bomber man or boulder dash. You might have noticed that the characters are running on grids and never stop or change direction on a grid boundary. They might be made so well that you don't really even notice there were any grids!
+
+You might think these kind of games are hard to do, as they require animating state changes between transition and there's that input messing up the thing as well. There you might not be farther away from the truth, unless you happen to be a corporation. The appearance on this kind of games is just a cream on the top, and it is really simple to prepare.
+
+These kind of games are so simple that people occassionally end up writing a bare tetris or nibbles as an impulsive behaviour. Most of them struggle at creating the topping though. If you break it all into frames of sort, you can see the topping itself is really trivial as well.
+
+You could first think about a simple sprite animation. Such animation would be broken into frames. Each frame has an associated image and a duration value which tells when the next frame is played. You could do this in your sleep but may not have an idea of how to mix the animation into the sort of games this section is about.
+
+It gets way much easier when you realise the game state itself goes in sort of frames too. Each frame has some duration and whenever a frame gets entered the code gets run, which changes the state of the game. Just animate/interpolate between the state transitions and there's your polished graphics. The cream on the top is just pretty visuals with minor changes in game logic. 
 
 ##Conclusion
 Not much to say to the conclusion. If you were doing a real game you might like to embed an editor into your game, that you could tune the game details while the game itself is playing. It isn't a jump into unknown since you've read this tutorial. You work on a state of some kind so just turn the malleable part of the game into a state of some sort, that'll make it more flexible too as well.
