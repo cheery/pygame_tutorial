@@ -28,6 +28,7 @@ Prepare to fail numerous times before really getting what I just told. This tuto
 * [Avoid Work](#avoid-work)
 * [Brute Paint](#brute-paint)
 * [Divide and Conquer](#divide-and-conquer)
+* [From Useless to Useful](#from-useless-to-useful)
 * [TOC](#TOC)
 
 ##Rolling Columns
@@ -267,7 +268,7 @@ Comments point out what each line is printing, so you won't need to run the code
 You might wonder what the `(object)` -piece is doing in the class declaration. It's an another class which this class is inheriting from. I don't explain it further as it's more complex subject and not really needed at the moment. Read it up from the python manual if it bothers you. Otherwise I won't mention of it again during this tutorial.
 
 ##From Useless to Useful
-I'm afraid other projects are going to catch my attention very soon so I have to write a shorter conclusion for this tutorial than what I anticipated. Lets make this editor useful fast and get something done before I move on. You might have been wondering how to make that useless brute useful. I'd say it's useless because you can't change a color or choose a file. Lets fix this fast one problem at a time.
+I told about the potential in brute paint, but I'm afraid other projects are going to catch my attention very soon. This tutorial needs a conclusion of some kind, after all. In this section we'll make this editor useful quite quickly and get a move on. The first things you might have noticed is that you couldn't change a color or choose a file. We'll address those two issues in this section.
 
 The program starts having lot of conditional clauses under that keydown event. It's okay to keep them where they are, but doing like this makes it bit easier to follow. This function should go somewhere before the process enters eventloop:
 
@@ -311,7 +312,7 @@ That's it. You should be able to select some colors even if they're not that pre
 
 This is not the beautiest code I've written. But it almost does the job. You can perhaps see that I'm running out of nice variable names.
 
-Now it's usable! eh.. wait. We probably want to color other things than just "canvas.png" there. The author might also like to select the size of the canvas that's being used. We'd like to get some arguments in to change the behavior of this program. We'll also want to check whether a file exists, to automaticly open a file if given. Lets introduce optparse and os in the start of the file:
+Now it's quite bit more usable! eh.. wait. We probably want to color other things than just "canvas.png" there. The author might also like to select the size of the canvas that's being used. We'd like to get some arguments in to change the behavior of this program. We'll also want to check whether a file exists, to automaticly open a file if given. Lets introduce optparse and os in the start of the file:
 
     import os
     from optparse import OptionParser
@@ -454,11 +455,11 @@ Well, I'm generous enough to include 1:1 image on the screen as well, it's up to
         animation_frame(screen)
         pygame.display.flip()
 
-You can see we have arrived to something that's slightly less brute than the earlier version we had. We can choose a color from fixed palette and where to save the results. Oooh! Real artists would still rather draw on a toilet paper than this! You cannot write a nice paint out of a tutorial you know. :-) But there was an other point in this exercise than to get a nice brute painting app. The point of this exercise was to give you an idea that you can make your own tools, and that existing ones aren't magical artifacts you couldn't change somehow to your liking.
+You can see we have arrived to something that's slightly less brute than the earlier version we had. We can choose a color from fixed palette and where to save the results. Oooh! Real artists would still rather draw on a toilet paper than this! Given the time constraints we had, I couldn't get it further from this. But you can! And that is the point of this tutorial. You could keep adding the features in small increments like I did, and get something useful eventually.
 
-You might want to learn scripting gimp or blender, if you're not running them off a shoestring or expect to embed them into your games. Things like gimp or blender can't do everything for you though. If you'll find yourself in position that you need a some sort of tool, open this tutorial again and remind yourself that toolwriting isn't different from any other kind of programming.
+At some point the size of the program would become daunting. If you were to fail your development would stop there. Otherwise the program gets designed such that it can be written further from the critical mass where it'd otherwise become too big to maintain. 
 
-So uh.. Maybe we'd like to make a game with our newly created tool next?
+One point of this exercise was to show that you can make your own tools. And that existing ones aren't magical artifacts that couldn't be changed in any way. You might want to learn scripting gimp or blender, if you're not going to run them off a shoestring or expect to embed them into your games. Things like gimp or blender can't do everything for you though. If you'll find yourself in position that you need a some sort of tool that doesn't fit into blender/gimp -world, open this tutorial again and remind yourself that toolwriting isn't different from any other kind of programming.
 
 ##To The Battle Stations
 Doing the actual game would be pretty much repetition of the instructions I already gave. So I just made it without typing much instructions while working on it. The resulting game can be seen in the main.py of this directory.
